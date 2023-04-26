@@ -49,14 +49,14 @@ public class ProductList {
 
             };
         });
-        */
+*/
 
 
 
 
         productTable = new TableView<>();
-       // productTable.getColumns().addAll(id,name,price,image);
-        productTable.getColumns().addAll(id,name,price);
+      // productTable.getColumns().addAll(id,name,price,image);
+         productTable.getColumns().addAll(id,name,price);
         productTable.setItems(data);
         productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 

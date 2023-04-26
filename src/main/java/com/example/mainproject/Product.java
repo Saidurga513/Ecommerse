@@ -21,12 +21,12 @@ public class Product {
 
 
 
-//    public Product(int id, String name, double price, String imageName) {
-//        this.id = new SimpleIntegerProperty(id);
-//        this.name = new SimpleStringProperty(name);
-//        this.price = new SimpleDoubleProperty(price);
-//        this.imageName = new SimpleStringProperty(imageName);
-//    }
+    public Product(int id, String name, double price, String imageName) {
+        this.id = new SimpleIntegerProperty(id);
+        this.name = new SimpleStringProperty(name);
+        this.price = new SimpleDoubleProperty(price);
+        this.imageName = new SimpleStringProperty(imageName);
+    }
 
 
     public Product(int id, String name, double price) {
@@ -52,7 +52,7 @@ public class Product {
                         rs.getString("name"),
                         rs.getDouble("price"));
 
-                       //   rs.getString("image"));
+                      // rs.getString("image");
                 products.add(product);
             }
             return products;

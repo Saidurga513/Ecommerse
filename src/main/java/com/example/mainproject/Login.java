@@ -10,7 +10,7 @@ public class Login {
     Customer customerLogin(String username, String password )  {
       //  DbConnection dbConnection = new DbConnection();
         DbConnection dbConnection=new DbConnection();
-        MessageDigest md =null;
+        MessageDigest md;
         try {
             md = MessageDigest.getInstance("SHA-512");
         } catch (NoSuchAlgorithmException e) {

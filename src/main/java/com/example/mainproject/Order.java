@@ -1,11 +1,13 @@
 package com.example.mainproject;
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
 public class Order {
+    TableView<Order> ordertable;
 
     static boolean placeOrder(Customer customer, Product product){
         String groupOrderId = "select max(group_order_id)+1  id from orders";
@@ -56,4 +58,6 @@ public class Order {
         }
         return 0;
     }
+
+
 }

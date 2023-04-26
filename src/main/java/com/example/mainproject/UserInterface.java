@@ -18,12 +18,14 @@ import java.security.NoSuchAlgorithmException;
 public class UserInterface {
     GridPane loginPage;
     GridPane signupPage;
-    HBox headerBar;
+    HBox headerBar,headerBar1;
 
     HBox footerBar;
 
-    Button signInButton;
-    Button signUpButton;
+    Button signInButton,orderButton;
+    Button profileButton;
+    Button signOutButton;
+    Button signUpButton=new Button();
     Button placeOrderButton = new Button("Place Order");
     Label welcomeLabel;
 
@@ -52,6 +54,8 @@ public class UserInterface {
         body.getChildren().add(productPage);
         root.setCenter(body);
         root.setTop(headerBar);
+        headerBar.getChildren().remove(signOutButton);
+        //root.setTop(headerBar1);
         root.setBottom(footerBar);
         return root;
     }
@@ -78,6 +82,8 @@ public class UserInterface {
                 loggedInCustomer = login.customerLogin(uname,pass);
                 if (loggedInCustomer != null){
                     welcomeLabel.setText("Welcome "+loggedInCustomer.getName());
+                   welcomeLabel.setAlignment(Pos.CENTER);
+                    headerBar.getChildren().add(signOutButton);
                     headerBar.getChildren().add(welcomeLabel);
                     body.getChildren().remove(loginPage);
                     body.getChildren().add(productPage);
@@ -168,45 +174,82 @@ public class UserInterface {
     }
 
     private void createHeaderBar(){
+
+
+
         Button homeButton = new Button();
         Image logo = new Image("C:\\Users\\saidu\\IdeaProjects\\MainProject\\images\\home.png");
         ImageView logoView = new ImageView(logo);
         logoView.setFitWidth(85);
-        logoView.setFitHeight(20);
+        logoView.setFitHeight(40);
         homeButton.setGraphic(logoView);
         TextField search = new TextField();
         search.setPrefWidth(250);
+        search.setPrefHeight(50);
         search.setPromptText("Type to search");
 
-        Button searchButton = new Button("Search");
-        Button cartButton = new Button("Cart");
-        Button orderButton =new Button("Orders");
+        Button searchButton = new Button();
+       Button cartButton = new Button();
+     //  Button orderButton =new Button();
+           signInButton = new Button();
+        signUpButton = new Button();
+        signOutButton=new Button();
+        Image signinlogo = new Image("C:\\Users\\saidu\\IdeaProjects\\MainProject\\images\\login.jpg");
+        ImageView signinlogoView = new ImageView(signinlogo);
+        signinlogoView.setFitWidth(40);
+        signinlogoView.setFitHeight(40);
+        signInButton.setGraphic(signinlogoView);
+        Image signoutlogo = new Image("C:\\Users\\saidu\\IdeaProjects\\MainProject\\images\\logout.jpeg");
+        ImageView signoutlogoView = new ImageView(signoutlogo);
+        signoutlogoView.setFitWidth(40);
+        signoutlogoView.setFitHeight(40);
+        signOutButton.setGraphic(signoutlogoView);
+        Image cartlogo = new Image("C:\\Users\\saidu\\IdeaProjects\\MainProject\\images\\carto.jpg");
+        ImageView cartologoView = new ImageView(cartlogo);
+        cartologoView.setFitWidth(40);
+        cartologoView.setFitHeight(40);
+        cartButton.setGraphic(cartologoView);
+        Image searchlogo=new Image("C:\\Users\\saidu\\IdeaProjects\\MainProject\\images\\search.png");
+        ImageView searchlogoview=new ImageView(searchlogo);
+        searchlogoview.setFitWidth(40);
+        searchlogoview.setFitHeight(40);
+        searchButton.setGraphic(searchlogoview);
 
-
-
-        signInButton = new Button("Login");
-        signUpButton = new Button("Signup");
-
-
+//        Image ordlogo = new Image("C:\\Users\\saidu\\IdeaProjects\\MainProject\\images\\ordericon.jpeg");
+//        ImageView ordlogoView = new ImageView(ordlogo);
+//          ordlogoView.setFitWidth(40);
+//        ordlogoView.setFitHeight(40);
+//        orderButton.setGraphic(ordlogoView);
+        Image signuplogo = new Image("C:\\Users\\saidu\\IdeaProjects\\MainProject\\images\\signup.jpeg");
+        ImageView signuplogoView = new ImageView(signuplogo);
+        signuplogoView.setFitWidth(40);
+        signuplogoView.setFitHeight(40);
+        signUpButton.setGraphic(signuplogoView);
 
         headerBar = new HBox();
         headerBar.setSpacing(10);
         headerBar.setPadding(new Insets(10));
         headerBar.setAlignment(Pos.CENTER);
-        headerBar.getChildren().addAll(homeButton,search,searchButton,signInButton,signUpButton,cartButton,orderButton);
-
+        headerBar.setStyle("-fx-background-color:lime");
+        headerBar1=new HBox();
+        //headerBar1.getChildren().addAll(homeButton,search,searchButton,signOutButton,cartButton,orderButton);
+      //  headerBar.getChildren().addAll(homeButton,search,searchButton,signInButton,signUpButton);
+      headerBar.getChildren().addAll(homeButton,search,searchButton,signInButton,signUpButton,cartButton,signOutButton);
         signInButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 body.getChildren().clear();
+                //body.getChildren().add(signOutButton);
                 body.getChildren().add(loginPage);
-                headerBar.getChildren().remove(signInButton);
-                footerBar.setVisible(false);
+               headerBar.getChildren().remove(signInButton);
+                headerBar.getChildren().remove(signUpButton);
+                footerBar.setVisible(true);
             }
         });
         cartButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+
                 VBox cartPage = productList.getProductsInCart(itemsInCart);
                 cartPage.setAlignment(Pos.CENTER);
                 cartPage.setSpacing(10);
@@ -247,6 +290,16 @@ public class UserInterface {
                 footerBar.setVisible(true);
                 if (loggedInCustomer == null && !headerBar.getChildren().contains(signInButton))
                     headerBar.getChildren().add(signInButton);
+               //else if (loggedInCustomer!=null && !headerBar.getChildren().contains(signInButton))
+                   // headerBar.getChildren().add(signOutButton);
+            }
+        });
+        signOutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                body.getChildren().clear();
+                body.getChildren().add(headerBar);
+                body.getChildren().remove(signOutButton);
             }
         });
         signUpButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -254,6 +307,40 @@ public class UserInterface {
             public void handle(ActionEvent actionEvent) {
                 body.getChildren().clear();
                 body.getChildren().add(signupPage);
+            }
+        });
+//        orderButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent actionEvent) {
+//                body.getChildren().clear();
+//                if(loggedInCustomer==null)
+//                    createDialog("Please login first to open orders");
+//                if (loggedInCustomer!=null)
+//
+//                return;
+//
+//
+//
+//            }
+//        });
+        signOutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                body.getChildren().clear();
+                body.getChildren().add(productPage);
+                headerBar.getChildren().removeAll(welcomeLabel,signOutButton);
+                loggedInCustomer=null;
+                footerBar.setVisible(true);
+                if (loggedInCustomer == null && !headerBar.getChildren().contains(signInButton))
+                    headerBar.getChildren().add(signInButton);
+
+            }
+        });
+        searchButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String result=search.getText();
+
             }
         });
     }
@@ -284,6 +371,7 @@ public class UserInterface {
 
                 boolean count = Order.placeOrder(loggedInCustomer,product);
                 if (count){
+
                     createDialog("Order placed successfully");
                 }else {
                     createDialog("Order failed");
